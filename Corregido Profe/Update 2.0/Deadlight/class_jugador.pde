@@ -40,9 +40,15 @@ class Jugador {
     posicion.y = constrain(posicion.y, 20, height - 20);
   }
 
-  void mostrar() {
+
+ void mostrar() {
+   pushMatrix();
     imageMode(CENTER);
-    image(sprite, posicion.x, posicion.y, 70, 70);
+    translate(posicion.x, posicion.y);
+    rotate(linterna.angulo);
+    image(sprite, 0, 0, 70, 70);
+    
+    popMatrix();
   }
 }
 
