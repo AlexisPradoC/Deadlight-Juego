@@ -23,7 +23,6 @@ class Linterna {
     fill(255, 255, 180, 60);
     noStroke();
 
-
     arc(
       0,
       0,

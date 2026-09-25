@@ -16,7 +16,6 @@ class Enemigo {
     if (iluminado) {
       fill(255, 0, 0);
     } else {
-
       fill(255);
     }
 
