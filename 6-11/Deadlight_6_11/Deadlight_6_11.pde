@@ -12,6 +12,9 @@ PImage spriteJugador;
 PImage spriteEnemigo; 
 PImage fondoMapa;
 
+Nuevo//PImage fondoMapa2;
+
+Nuevo//int escenaActual = 1;
 // Banderas globales para el movimiento(WASD)
 boolean movUp, movDown, movLeft, movRight;
 
@@ -21,6 +24,7 @@ void setup() {
   spriteJugador = loadImage("jugador.png");
   spriteEnemigo = loadImage("enemigo.png");
   fondoMapa = loadImage("mapa.png");
+fondoMapa2 = loadImage("mapa2.png"); //nuevo
   jugador = new Jugador(width/2, height/2, spriteJugador);
   linterna = new Linterna();
 
@@ -56,8 +60,15 @@ void draw() {
   } else {
     imageMode(CORNER); 
     image(fondoMapa, 0, 0, width, height);
-
-    // Efecto de oscuridad
+ 
+//Nuevo// if (escenaActual == 1) {
+  image(fondoMapa, 0, 0, width, height);
+}
+else if (escenaActual == 2) {
+  image(fondoMapa2, 0, 0, width, height);
+  }
+NUevo//
+// Efecto de oscuridad
     fill(0, 100); 
     noStroke();
     rect(0, 0, width, height);
@@ -114,6 +125,56 @@ void jugar() {
 }
 
 
+
+
+
+NUevo/
+void jugar() {
+  if (estadoDelJuego == 1) {
+    jugador.actualizar();
+
+    // PASAR DE HABITACION 1 A 2
+    if (escenaActual == 1 &&
+        jugador.posicion.x >= width &&
+        jugador.posicion.y > 250 &&
+        jugador.posicion.y < 430) {
+
+      escenaActual = 2;
+
+      jugador.posicion.x = 30;
+      jugador.posicion.y = 340;
+    }
+
+    // VOLVER DE HABITACION 2 A 1
+    if (escenaActual == 2 &&
+        jugador.posicion.x <= 0 &&
+        jugador.posicion.y > 250 &&
+        jugador.posicion.y < 430) {
+
+      escenaActual = 1;
+
+      jugador.posicion.x = width - 30;
+      jugador.posicion.y = 340;
+    }
+
+    // ACTUALIZAR LINTERNA
+    linterna.actualizar(jugador.posicion, jugador.angulo);
+
+    // ACTUALIZAR ENEMIGOS
+    for (Enemigo enemigo : enemigos) {
+      enemigo.actualizar(linterna);
+    }
+
+    // MOSTRAR ELEMENTOS
+    linterna.mostrar();
+    jugador.mostrar();
+
+    for (Enemigo enemigo : enemigos) {
+      enemigo.mostrar();
+    }
+  }
+}
+Nuevi//
 // CONTROL DE TECLADO
 
 void keyPressed() {
